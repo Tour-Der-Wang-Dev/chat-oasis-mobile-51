@@ -52,15 +52,23 @@ describe('API Integration Tests', () => {
   });
 
   it('should handle API errors with retry mechanism', async () => {
-    // Mock network error twice, then succeed on third try
-    mockAxios.onGet('/api/users/profile')
-      .networkErrorOnce()
-      .networkErrorOnce()
-      .replyOnce(200, {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        name: 'Jane Doe',
-        email: 'jane.doe@example.com',
-      });
+    // Instead of using networkErrorOnce (which doesn't exist), we'll use a different approach
+    // First request: network error
+    mockAxios.onGet('/api/users/profile').replyOnce(config => {
+      return [0, null, {}, 'Network Error'];
+    });
+    
+    // Second request: network error again
+    mockAxios.onGet('/api/users/profile').replyOnce(config => {
+      return [0, null, {}, 'Network Error'];
+    });
+    
+    // Third request: success
+    mockAxios.onGet('/api/users/profile').replyOnce(200, {
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      name: 'Jane Doe',
+      email: 'jane.doe@example.com',
+    });
     
     // Mock setTimeout for faster tests
     vi.useFakeTimers();
