@@ -1,39 +1,98 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
-import { Home, Search, MessageSquare, User } from "lucide-react";
+
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Home, Search, Calendar, MessageSquare, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import NavItem from "./NavItem";
+import { motion, AnimatePresence } from "framer-motion";
 
 const BottomNavigation = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Only hide on scroll down if we're past a threshold
+      if (currentScrollY > 100) {
+        setIsVisible(currentScrollY < lastScrollY);
+      } else {
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+  
+  const navItems = [
+    { path: "/", icon: <Home size={22} />, label: "หน้าแรก" },
+    { path: "/explore", icon: <Search size={22} />, label: "ค้นหา" },
+    { path: "/booking", icon: <Calendar size={22} />, label: "จองทัวร์" },
+    { path: "/chats", icon: <MessageSquare size={22} />, label: "แชท" },
+    { path: "/profile", icon: <User size={22} />, label: "โปรไฟล์" },
+  ];
+  
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-background border-t flex items-center justify-around px-2 safe-bottom z-10 shadow-sm will-change-transform">
-      <NavItem 
-        to="/" 
-        icon={<Home size={22} />} 
-        label="Home" 
-        isActive={location.pathname === "/"} 
-      />
-      <NavItem 
-        to="/explore" 
-        icon={<Search size={22} />} 
-        label="Explore" 
-        isActive={location.pathname === "/explore"} 
-      />
-      <NavItem 
-        to="/chats" 
-        icon={<MessageSquare size={22} />} 
-        label="Chats" 
-        isActive={location.pathname === "/chats"} 
-      />
-      <NavItem 
-        to="/profile" 
-        icon={<User size={22} />} 
-        label="Profile" 
-        isActive={location.pathname === "/profile"} 
-      />
-    </nav>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.nav 
+          className="fixed bottom-0 left-0 right-0 h-16 bg-[#FFDEAD] border-t border-[#FFE4B5] flex items-center justify-around px-2 safe-bottom z-20 shadow-lg"
+          initial={{ y: 100 }}
+          animate={{ y: 0 }}
+          exit={{ y: 100 }}
+          transition={{ duration: 0.3 }}
+        >
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.path || 
+              (item.path === "/booking" && location.pathname === "/tour-der-wang" && location.hash === "#booking");
+            
+            return (
+              <button
+                key={item.path}
+                onClick={() => navigate(item.path)}
+                className={cn(
+                  "flex flex-col items-center justify-center h-full w-full relative",
+                  isActive ? "text-[#B39B7D]" : "text-[#B39B7D]/50"
+                )}
+                style={{ 
+                  fontFamily: 'Sukhumvit Set, Roboto, sans-serif',
+                  touchAction: 'manipulation' 
+                }}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="bottomNavIndicator"
+                    className="absolute top-0 left-3 right-3 h-0.5 bg-[#B39B7D] rounded-full"
+                    transition={{ type: 'spring', duration: 0.5 }}
+                  />
+                )}
+                <span className="relative">
+                  {item.icon}
+                  {isActive && (
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute inset-0 bg-[#FFD700]/20 rounded-full -z-10"
+                    />
+                  )}
+                </span>
+                <span className={cn(
+                  "text-xs mt-1",
+                  isActive ? "font-medium" : "font-normal"
+                )}>
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </motion.nav>
+      )}
+    </AnimatePresence>
   );
 };
 

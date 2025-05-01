@@ -1,78 +1,147 @@
 
+import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import BottomNavigation from "@/components/BottomNavigation";
+import { ChevronRight, User, Calendar, Heart, Map, Settings, Bell, CreditCard, HelpCircle, LogOut } from "lucide-react";
+import MobileLayout from "@/components/MobileLayout";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
+  const isLoggedIn = true; // This would normally come from your auth state
+
+  const menuItems = [
+    { icon: <Calendar className="w-5 h-5" />, label: "ประวัติการจอง", path: "/bookings" },
+    { icon: <Heart className="w-5 h-5" />, label: "รายการโปรด", path: "/favorites" },
+    { icon: <Map className="w-5 h-5" />, label: "แผนที่ออฟไลน์", path: "/offline-maps" },
+    { icon: <Bell className="w-5 h-5" />, label: "การแจ้งเตือน", path: "/notifications" },
+    { icon: <CreditCard className="w-5 h-5" />, label: "การชำระเงิน", path: "/payments" },
+    { icon: <Settings className="w-5 h-5" />, label: "การตั้งค่า", path: "/account-settings" },
+    { icon: <HelpCircle className="w-5 h-5" />, label: "ช่วยเหลือ", path: "/help" },
+  ];
 
   return (
-    <div className="min-h-screen pb-20 safe-bottom">
-      <header className="bg-primary p-3 sm:p-4 shadow-sm safe-top">
-        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Profile</h1>
-        <p className="text-xs sm:text-sm text-muted-foreground">Your account settings</p>
+    <MobileLayout>
+      <header className="bg-[#FFDEAD] p-4 pb-6 shadow-sm safe-top">
+        <h1 
+          className="text-xl font-bold text-[#B39B7D]"
+          style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+        >
+          โปรไฟล์
+        </h1>
+        <p 
+          className="text-xs text-[#B39B7D]/80"
+          style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+        >
+          จัดการข้อมูลส่วนตัวและการตั้งค่า
+        </p>
       </header>
       
-      <main className="p-3 sm:p-4">
-        <div className="flex flex-col items-center mb-6 sm:mb-8 pt-2 sm:pt-4">
-          <Avatar className="h-20 w-20 sm:h-24 sm:w-24 mb-3 sm:mb-4">
-            <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-            <AvatarFallback>JD</AvatarFallback>
-          </Avatar>
-          
-          <h2 className="text-lg sm:text-xl font-semibold">Jane Doe</h2>
-          <p className="text-xs sm:text-sm text-muted-foreground">jane.doe@example.com</p>
-          
-          <Button variant="outline" className="mt-3 sm:mt-4 text-sm py-1.5">
-            Edit Profile
-          </Button>
-        </div>
-        
-        <div className="space-y-3 sm:space-y-4">
-          <div className="bg-card rounded-xl p-3 sm:p-4">
-            <h3 className="font-medium mb-2 text-sm sm:text-base text-left">App Settings</h3>
-            <div className="space-y-1">
-              <div className="flex items-center justify-between p-2 hover:bg-muted/50 active:bg-muted rounded-lg cursor-pointer text-sm">
-                <span>Notifications</span>
-                <span className="text-muted-foreground text-xs sm:text-sm">On</span>
+      <main className="px-4 py-6 bg-[#FFF8E7] flex-1">
+        {isLoggedIn ? (
+          <>
+            <div className="bg-white rounded-xl p-4 shadow-sm mb-6 flex items-center">
+              <Avatar className="h-16 w-16 border-2 border-[#FFD700]">
+                <AvatarImage src="https://github.com/shadcn.png" alt="User" />
+                <AvatarFallback className="bg-[#FFDEAD] text-[#B39B7D]">JD</AvatarFallback>
+              </Avatar>
+              
+              <div className="ml-4 flex-1">
+                <h2 
+                  className="text-lg font-semibold text-[#B39B7D]"
+                  style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+                >
+                  Jane Doe
+                </h2>
+                <p 
+                  className="text-xs text-[#B39B7D]/70"
+                  style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+                >
+                  jane.doe@example.com
+                </p>
+                
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="mt-1 h-8 text-xs text-[#B39B7D] hover:bg-[#FFDEAD]/20 p-0"
+                  onClick={() => navigate("/account-settings")}
+                  style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+                >
+                  แก้ไขโปรไฟล์
+                </Button>
               </div>
-              <div className="flex items-center justify-between p-2 hover:bg-muted/50 active:bg-muted rounded-lg cursor-pointer text-sm">
-                <span>Chat History</span>
-                <span className="text-muted-foreground text-xs sm:text-sm">Saved</span>
-              </div>
-              <div className="flex items-center justify-between p-2 hover:bg-muted/50 active:bg-muted rounded-lg cursor-pointer text-sm">
-                <span>Text Size</span>
-                <span className="text-muted-foreground text-xs sm:text-sm">Medium</span>
-              </div>
+              
+              <ChevronRight className="w-5 h-5 text-[#B39B7D]/50" />
             </div>
-          </div>
-          
-          <div className="bg-card rounded-xl p-3 sm:p-4">
-            <h3 className="font-medium mb-2 text-sm sm:text-base text-left">Account</h3>
-            <div className="space-y-1">
-              <div className="flex items-center justify-between p-2 hover:bg-muted/50 active:bg-muted rounded-lg cursor-pointer text-sm">
-                <span>Privacy Settings</span>
-              </div>
-              <div className="flex items-center justify-between p-2 hover:bg-muted/50 active:bg-muted rounded-lg cursor-pointer text-sm">
-                <span>Change Password</span>
-              </div>
-              <div className="flex items-center justify-between p-2 text-destructive/80 hover:bg-muted/50 active:bg-muted rounded-lg cursor-pointer text-sm">
-                <span>Delete Account</span>
-              </div>
+            
+            <div className="space-y-3">
+              {menuItems.map((item, index) => (
+                <div 
+                  key={index}
+                  className="bg-white rounded-xl p-4 shadow-sm flex items-center hover:bg-[#FFDEAD]/10 transition-colors cursor-pointer"
+                  onClick={() => navigate(item.path)}
+                >
+                  <div className="w-8 h-8 rounded-full bg-[#FFDEAD]/50 flex items-center justify-center mr-3">
+                    <span className="text-[#B39B7D]">{item.icon}</span>
+                  </div>
+                  <span 
+                    className="flex-1 text-[#B39B7D]"
+                    style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+                  >
+                    {item.label}
+                  </span>
+                  <ChevronRight className="w-5 h-5 text-[#B39B7D]/50" />
+                </div>
+              ))}
             </div>
-          </div>
-          
-          <div className="mt-6 sm:mt-8">
-            <Button variant="ghost" className="w-full text-sm" onClick={() => {}}>
-              Sign Out
+            
+            <Button 
+              variant="outline"
+              className="w-full mt-6 flex items-center gap-2 text-[#B39B7D] border-[#FFDEAD]"
+              style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+            >
+              <LogOut className="w-4 h-4" />
+              ออกจากระบบ
+            </Button>
+          </>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-10">
+            <div className="w-24 h-24 rounded-full bg-[#FFDEAD] mb-4 flex items-center justify-center">
+              <User className="w-12 h-12 text-[#B39B7D]" />
+            </div>
+            
+            <h2 
+              className="text-xl font-bold text-[#B39B7D] mb-2"
+              style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+            >
+              ยินดีต้อนรับ
+            </h2>
+            
+            <p 
+              className="text-sm text-[#B39B7D]/70 mb-6 text-center"
+              style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+            >
+              เข้าสู่ระบบเพื่อจัดการข้อมูลของคุณและเข้าถึงบริการทั้งหมด
+            </p>
+            
+            <Button 
+              className="w-full bg-[#FFD700] hover:bg-[#FFD700]/80 text-[#B39B7D] rounded-xl py-6 mb-4"
+              style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+            >
+              เข้าสู่ระบบ
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="w-full border-[#FFE4B5] text-[#B39B7D] rounded-xl py-6"
+              style={{ fontFamily: 'Sukhumvit Set, Roboto, sans-serif' }}
+            >
+              สมัครสมาชิก
             </Button>
           </div>
-        </div>
+        )}
       </main>
-      
-      <BottomNavigation />
-    </div>
+    </MobileLayout>
   );
 };
 
