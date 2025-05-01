@@ -12,14 +12,26 @@ export function useIsMobile() {
 
   React.useEffect(() => {
     // Check for mobile devices via user agent as a fallback
-    const checkIfMobile = () => {
-      const userAgent = 
-        typeof window.navigator === "undefined" ? "" : navigator.userAgent
-      const mobileRegex = 
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
-      const touchEnabled = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-      return mobileRegex.test(userAgent) || touchEnabled || window.innerWidth < MOBILE_BREAKPOINT
-    }
+    // Memoized mobile detection for better performance
+  const checkIfMobile = React.useCallback(() => {
+      // Use feature detection first (most reliable)
+      const hasTouchScreen = (
+        'ontouchstart' in window || 
+        navigator.maxTouchPoints > 0 ||
+        // @ts-ignore - MS Surface detection
+        (navigator.msMaxTouchPoints > 0)
+      );
+      
+      // Then screen size as fallback
+      const isSmallScreen = window.innerWidth < MOBILE_BREAKPOINT;
+      
+      // Then UA as last resort
+      const userAgent = typeof window.navigator === "undefined" ? "" : navigator.userAgent;
+      const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+      
+      // Combine all signals
+      return hasTouchScreen || isSmallScreen || mobileUA;
+    }, []);
 
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
     

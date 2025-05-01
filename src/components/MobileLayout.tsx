@@ -32,15 +32,38 @@ const MobileLayout = ({
       e.stopPropagation();
     };
     
+    // Use passive event listeners for better scrolling performance
     main.addEventListener('scroll', preventPropagation, { passive: true });
     
-    // Add touch events for iOS
+    // Add touch events for iOS - passive for better performance
     if (isMobile) {
       main.addEventListener('touchstart', () => {}, { passive: true });
+      main.addEventListener('touchmove', () => {}, { passive: true });
+      
+      // Prevent elastic overscroll effect on iOS
+      document.body.addEventListener('touchmove', (e) => {
+        if (main.scrollTop === 0 && main.scrollHeight > main.clientHeight) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+      
+      // Apply scroll momentum optimizations
+      if ('scrollBehavior' in document.documentElement.style) {
+        main.style.scrollBehavior = 'smooth';
+      }
     }
+    
+    // Optimize repaints during scrolling with a hint
+    main.style.willChange = 'scroll-position';
     
     return () => {
       main.removeEventListener('scroll', preventPropagation);
+      if (isMobile) {
+        document.body.removeEventListener('touchmove', (e) => {
+          if (main.scrollTop === 0) e.preventDefault();
+        });
+      }
+      main.style.willChange = 'auto';
     };
   }, [isMobile]);
   
