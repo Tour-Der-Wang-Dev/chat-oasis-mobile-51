@@ -10,6 +10,7 @@ import ChatPage from "./pages/ChatPage";
 import ChatsPage from "./pages/ChatsPage";
 import ExplorePage from "./pages/ExplorePage";
 import ProfilePage from "./pages/ProfilePage";
+import TourDerWang from "./pages/TourDerWang";
 import { useIsMobile } from "./hooks/use-mobile";
 import { useEffect } from "react";
 
@@ -45,6 +46,7 @@ const AppContent = () => {
         <Route path="/chats" element={<ChatsPage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/tour-der-wang" element={<TourDerWang />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

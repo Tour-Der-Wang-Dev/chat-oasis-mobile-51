@@ -1,8 +1,9 @@
-
 import { useState } from "react";
 import BotCard, { Bot } from "@/components/BotCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BottomNavigation from "@/components/BottomNavigation";
+import { Link } from "@nextui-org/link";
+import { Search, MessageSquare, Users, Map } from "lucide-react";
 
 const SAMPLE_BOTS: Bot[] = [
   {
@@ -46,9 +47,9 @@ const CATEGORIES = ["All", "Productivity", "Education", "Creativity", "Health", 
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  
-  const filteredBots = activeCategory === "All" 
-    ? SAMPLE_BOTS 
+
+  const filteredBots = activeCategory === "All"
+    ? SAMPLE_BOTS
     : SAMPLE_BOTS.filter(bot => bot.category === activeCategory);
 
   return (
@@ -57,15 +58,15 @@ const Index = () => {
         <h1 className="text-xl sm:text-2xl font-bold text-foreground">Chat Oasis</h1>
         <p className="text-xs sm:text-sm text-muted-foreground">Your AI companions</p>
       </header>
-      
+
       <main className="p-3 sm:p-4">
         <div className="mb-5 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-left">Featured Chatbots</h2>
           <Tabs defaultValue="All" className="w-full">
             <TabsList className="mb-3 sm:mb-4 flex overflow-x-auto pb-1 sm:pb-2 hide-scrollbar">
               {CATEGORIES.map((category) => (
-                <TabsTrigger 
-                  key={category} 
+                <TabsTrigger
+                  key={category}
                   value={category}
                   onClick={() => setActiveCategory(category)}
                   className="bg-muted/50 text-xs sm:text-sm flex-shrink-0"
@@ -83,7 +84,7 @@ const Index = () => {
             </TabsContent>
           </Tabs>
         </div>
-        
+
         <div className="mt-6 sm:mt-8">
           <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-left">Recent Conversations</h2>
           <div className="bg-card rounded-xl p-4 sm:p-6 text-center">
@@ -91,7 +92,7 @@ const Index = () => {
           </div>
         </div>
       </main>
-      
+
       <BottomNavigation />
     </div>
   );
