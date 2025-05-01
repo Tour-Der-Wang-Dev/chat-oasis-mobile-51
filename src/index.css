@@ -3,6 +3,53 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile optimizations */
+@layer base {
+  html, body {
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+    touch-action: manipulation;
+    user-select: none;
+  }
+}
+
+@layer components {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .chat-bubble {
+    @apply rounded-xl px-3 py-2 max-w-[85%] sm:max-w-[75%] break-words;
+  }
+  
+  .chat-bubble-user {
+    @apply bg-primary text-primary-foreground ml-auto rounded-br-none;
+  }
+  
+  .chat-bubble-ai {
+    @apply bg-muted rounded-bl-none;
+  }
+}
+
+@keyframes bubble-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-bubble-in {
+  animation: bubble-in 0.3s ease-out forwards;
+}
+
 @layer base {
   :root {
     --background: 40 83% 94%;

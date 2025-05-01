@@ -1,52 +1,39 @@
-
-import { Home, MessageSquare, Search, User } from "lucide-react";
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { Home, Search, MessageSquare, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import NavItem from "./NavItem";
-import useNavigation from "@/hooks/use-navigation";
 
-// Define navigation item type for better type safety
-export interface NavigationItem {
-  icon: React.FC<React.ComponentProps<typeof Home>>;
-  label: string;
-  path: string;
-}
+const BottomNavigation = () => {
+  const location = useLocation();
 
-// Extract navigation items to be potentially reusable across the app
-export const defaultNavItems: NavigationItem[] = [
-  { icon: Home, label: "Home", path: "/" },
-  { icon: Search, label: "Explore", path: "/explore" },
-  { icon: MessageSquare, label: "Chats", path: "/chats" },
-  { icon: User, label: "Profile", path: "/profile" },
-];
-
-interface BottomNavigationProps {
-  navItems?: NavigationItem[];
-  className?: string;
-}
-
-const BottomNavigation = ({ 
-  navItems = defaultNavItems,
-  className 
-}: BottomNavigationProps) => {
-  const { isActive, navigateTo } = useNavigation();
-  
   return (
-    <nav 
-      className={cn(
-        "fixed bottom-0 left-0 right-0 bg-primary border-t border-border flex justify-around items-center py-2 px-4 z-10 safe-bottom touch-action-manipulation tap-highlight-none",
-        className
-      )}
-      aria-label="Bottom navigation"
-    >
-      {navItems.map((item) => (
-        <NavItem
-          key={item.path}
-          item={item}
-          isActive={isActive(item.path)}
-          onClick={navigateTo}
-        />
-      ))}
-    </nav>
+    <div className="fixed bottom-0 left-0 right-0 h-16 bg-background border-t flex items-center justify-around px-2 safe-bottom z-10 shadow-sm">
+      <NavItem 
+        to="/" 
+        icon={<Home size={22} />} 
+        label="Home" 
+        isActive={location.pathname === "/"} 
+      />
+      <NavItem 
+        to="/explore" 
+        icon={<Search size={22} />} 
+        label="Explore" 
+        isActive={location.pathname === "/explore"} 
+      />
+      <NavItem 
+        to="/chats" 
+        icon={<MessageSquare size={22} />} 
+        label="Chats" 
+        isActive={location.pathname === "/chats"} 
+      />
+      <NavItem 
+        to="/profile" 
+        icon={<User size={22} />} 
+        label="Profile" 
+        isActive={location.pathname === "/profile"} 
+      />
+    </div>
   );
 };
 

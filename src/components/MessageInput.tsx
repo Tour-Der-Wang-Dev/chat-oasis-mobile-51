@@ -1,10 +1,11 @@
 
-import React, { useState, FormEvent } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { SendHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ArrowUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface MessageInputProps {
-  onSendMessage: (message: string) => void;
+  onSendMessage: (content: string) => void;
   placeholder?: string;
   disabled?: boolean;
 }
@@ -15,36 +16,65 @@ const MessageInput = ({
   disabled = false 
 }: MessageInputProps) => {
   const [message, setMessage] = useState("");
-
-  const handleSubmit = (e: FormEvent) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (message.trim() && !disabled) {
-      onSendMessage(message);
+      onSendMessage(message.trim());
       setMessage("");
+      
+      // Reset textarea height
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+      }
     }
   };
-
+  
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`;
+    }
+  };
+  
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [message]);
+  
   return (
-    <div className="message-input">
-      <form onSubmit={handleSubmit} className="flex-1 flex gap-2 w-full max-w-screen-lg mx-auto">
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder={placeholder}
-          disabled={disabled}
-          className="flex-1 bg-muted/50 rounded-full px-4 py-2.5 text-sm sm:text-base focus:outline-none focus:ring-1 focus:ring-ring"
-        />
-        <Button
-          type="submit"
-          size="icon"
-          className="rounded-full bg-accent hover:bg-accent/80 active:bg-accent/70 touch-action-manipulation"
-          disabled={!message.trim() || disabled}
-        >
-          <ArrowUp size={18} />
-        </Button>
-      </form>
-    </div>
+    <form 
+      onSubmit={handleSubmit} 
+      className={cn(
+        "flex items-end gap-2 p-3 safe-bottom bg-background border-t",
+        disabled && "opacity-60"
+      )}
+    >
+      <textarea
+        ref={textareaRef}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder={placeholder}
+        disabled={disabled}
+        rows={1}
+        className="flex-1 resize-none rounded-lg bg-muted p-2 text-sm placeholder:text-muted-foreground focus:outline-none"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e);
+          }
+        }}
+      />
+      <Button 
+        type="submit" 
+        size="icon" 
+        disabled={!message.trim() || disabled}
+        className="rounded-full h-10 w-10 flex-shrink-0"
+      >
+        <SendHorizontal size={20} />
+      </Button>
+    </form>
   );
 };
 

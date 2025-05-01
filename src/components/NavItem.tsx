@@ -1,28 +1,28 @@
-import { Home } from "lucide-react";
+
+import React from "react";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { NavigationItem } from "./BottomNavigation";
 
 interface NavItemProps {
-  item: NavigationItem;
+  to: string;
+  icon: React.ReactNode;
+  label: string;
   isActive: boolean;
-  onClick: (path: string) => void;
 }
 
-const NavItem = ({ item, isActive, onClick }: NavItemProps) => {
+const NavItem = ({ to, icon, label, isActive }: NavItemProps) => {
   return (
-    <button
-      onClick={() => onClick(item.path)}
+    <Link 
+      to={to} 
       className={cn(
-        "flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors mobile-touch-target tap-highlight-none",
-        isActive 
-          ? "text-foreground" 
-          : "text-muted-foreground hover:text-foreground active:bg-muted/40"
+        "flex flex-col items-center justify-center w-1/4 h-full transition-colors",
+        isActive ? "text-primary" : "text-muted-foreground"
       )}
-      aria-label={item.label}
+      aria-label={label}
     >
-      <item.icon size={20} className={cn(isActive ? "text-foreground" : "text-muted-foreground")} />
-      <span className="text-xs mt-1">{item.label}</span>
-    </button>
+      <div className="mb-1">{icon}</div>
+      <span className="text-xs font-medium">{label}</span>
+    </Link>
   );
 };
 

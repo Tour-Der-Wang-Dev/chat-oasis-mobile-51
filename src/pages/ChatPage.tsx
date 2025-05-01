@@ -218,14 +218,14 @@ const ChatPage = () => {
   }
   
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-[100dvh] max-h-[100dvh] bg-background">
       <ChatHeader 
         botName={currentBot.name} 
         botAvatar={currentBot.avatar}
         botStatus="online"
       />
       
-      <div className="flex-1 overflow-y-auto p-4 bg-background">
+      <div className="flex-1 overflow-y-auto p-2 sm:p-4 bg-background overscroll-behavior-y-contain">
         <div className="max-w-3xl mx-auto">
           {messages.map((message, index) => (
             <MessageBubble 
@@ -236,7 +236,7 @@ const ChatPage = () => {
           
           {isTyping && (
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden flex-shrink-0">
                 <img src={currentBot.avatar} alt={currentBot.name} className="w-full h-full object-cover" />
               </div>
               <div className="chat-bubble chat-bubble-ai flex gap-1 items-center">
