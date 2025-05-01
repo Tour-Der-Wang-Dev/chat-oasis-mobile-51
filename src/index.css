@@ -3,6 +3,44 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.translate-z-0 {
+  transform: translateZ(0);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Better mobile performance */
+.mobile-touch-target {
+  touch-action: manipulation;
+}
+
+.tap-highlight-none {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fix 100vh issue on mobile */
+.mobile-height {
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Optimize for transition performance */
+.optimize-transition {
+  transition-property: transform, opacity;
+  will-change: transform, opacity;
+}
+
 /* Mobile optimizations */
 @layer base {
   html, body {

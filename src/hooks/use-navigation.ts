@@ -1,37 +1,42 @@
-import { useCallback, useEffect, useState } from 'react';
+
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export const useNavigation = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(location.pathname);
 
-  // Handle special cases for routing
+  // Memorize path mapping logic
+  const getTabFromPath = useCallback((path: string) => {
+    if (path === '/') return '/';
+    if (path.startsWith('/explore')) return '/explore';
+    if (path.startsWith('/chat/') || path.startsWith('/chats')) return '/chats';
+    if (path.startsWith('/profile')) return '/profile';
+    return path;
+  }, []);
+
+  // Update active tab when location changes
   useEffect(() => {
-    // Set the current path as active
-    setActiveTab(location.pathname);
+    const mappedPath = getTabFromPath(location.pathname);
+    setActiveTab(mappedPath);
+  }, [location.pathname, getTabFromPath]);
 
-    // Special case: For path patterns like /chat/:id, also highlight chats tab
-    if (location.pathname.startsWith('/chat/')) {
-      setActiveTab('/chats');
-    }
-  }, [location.pathname]);
+  // Memoize common tab checks for performance
+  const tabStates = useMemo(() => ({
+    isHome: activeTab === '/',
+    isExplore: activeTab === '/explore',
+    isChats: activeTab === '/chats' || location.pathname.startsWith('/chat/'),
+    isProfile: activeTab === '/profile',
+  }), [activeTab, location.pathname]);
 
+  // Memoize setter to prevent unnecessary rerenders
   const setActive = useCallback((tab: string) => {
     setActiveTab(tab);
   }, []);
 
-  // Add memoized helpers for common tab checks
-  const isHome = activeTab === '/';
-  const isExplore = activeTab === '/explore';
-  const isChats = activeTab === '/chats' || location.pathname.startsWith('/chat/');
-  const isProfile = activeTab === '/profile';
-
   return { 
     activeTab, 
-    setActive, 
-    isHome,
-    isExplore,
-    isChats,
-    isProfile
+    setActive,
+    ...tabStates 
   };
 };

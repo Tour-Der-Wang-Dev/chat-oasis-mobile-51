@@ -7,6 +7,7 @@ import { useNavigation } from "@/hooks/use-navigation";
 
 const BottomNavigation: React.FC = () => {
   const { activeTab } = useNavigation();
+  const [touchEnabled, setTouchEnabled] = React.useState(false);
 
   // Optimized navigation items with better Thai translations
   const navItems = React.useMemo(() => [
@@ -32,17 +33,24 @@ const BottomNavigation: React.FC = () => {
     },
   ], []);
 
-  // Reduce layout thrashing with passive event handlers
+  // Add touch optimizations once on mount
   React.useEffect(() => {
-    const addPassiveListeners = () => {
-      document.querySelectorAll('.nav-item').forEach(el => {
-        el.addEventListener('touchstart', () => {}, { passive: true });
-      });
-    };
-    
-    // Add listeners with a small delay to ensure DOM is ready
-    const timer = setTimeout(addPassiveListeners, 100);
-    return () => clearTimeout(timer);
+    if (typeof document !== 'undefined') {
+      // Set touch enabled state
+      setTouchEnabled('ontouchstart' in window);
+      
+      // Use event delegation instead of multiple listeners
+      const navElement = document.querySelector('nav');
+      if (navElement) {
+        // Single event listener with delegation is more efficient
+        navElement.addEventListener('touchstart', (e) => {
+          // Only handle nav items
+          if ((e.target as Element).closest('.nav-item')) {
+            // Touch handling logic here if needed
+          }
+        }, { passive: true });
+      }
+    }
   }, []);
 
   return (
