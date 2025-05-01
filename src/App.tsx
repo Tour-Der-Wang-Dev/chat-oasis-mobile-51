@@ -33,8 +33,25 @@ const AppContent = () => {
           'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
       }
 
-      // Add touch class for mobile-specific styles
+      // Add touch class for mobile-specific styles and improve touch performance
       document.documentElement.classList.toggle('touch-device', isMobile);
+      
+      // Disable double-tap to zoom on mobile
+      if (isMobile) {
+        // Add event listener for fast clicks (remove 300ms tap delay)
+        document.addEventListener('touchstart', function() {}, { passive: true });
+        
+        // Disable text selection on interface elements
+        const style = document.createElement('style');
+        style.innerHTML = `
+          .no-select {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+          }
+        `;
+        document.head.appendChild(style);
+      }
     }
   }, [isMobile, orientation]);
 

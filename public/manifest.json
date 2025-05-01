@@ -1,18 +1,49 @@
 
 {
-  "name": "Tour Der Wang",
-  "short_name": "TourDerWang",
-  "description": "Tour Der Wang (ทัวร์ เดอ วังฯ) - ศูนย์กลางบริการการท่องเที่ยว",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#FFDEAD",
-  "theme_color": "#B39B7D",
+  "short_name": "Thai Chat",
+  "name": "Thai Chat App",
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "orientation": "portrait"
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#FFDEAD",
+  "background_color": "#FFF8E7",
+  "description": "Thai chat application for mobile users",
+  "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay"],
+  "shortcuts": [
+    {
+      "name": "Chats",
+      "url": "/chats",
+      "description": "View your chats"
+    },
+    {
+      "name": "Explore",
+      "url": "/explore",
+      "description": "Explore chatbots"
+    },
+    {
+      "name": "Profile",
+      "url": "/profile",
+      "description": "View your profile"
+    }
+  ]
 }
