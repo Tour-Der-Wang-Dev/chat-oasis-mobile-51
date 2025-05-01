@@ -9,7 +9,7 @@ packages = ["mailutils"]
 run = ["sh", "-c", "npm run dev"]
 
 [workflows]
-runButton = "Run"
+runButton = "Run Fixed App"
 
 [[workflows.workflow]]
 name = "Run"
@@ -28,6 +28,15 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run build"
+
+[[workflows.workflow]]
+name = "Run Fixed App"
+author = 42047138
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx vite"
 
 [[ports]]
 localPort = 8080
