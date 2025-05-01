@@ -1,38 +1,52 @@
 
 import { Home, MessageSquare, Search, User } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import NavItem from "./NavItem";
+import useNavigation from "@/hooks/use-navigation";
 
-const BottomNavigation = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  
-  const navItems = [
-    { icon: Home, label: "Home", path: "/" },
-    { icon: Search, label: "Explore", path: "/explore" },
-    { icon: MessageSquare, label: "Chats", path: "/chats" },
-    { icon: User, label: "Profile", path: "/profile" },
-  ];
+// Define navigation item type for better type safety
+export interface NavigationItem {
+  icon: React.FC<React.ComponentProps<typeof Home>>;
+  label: string;
+  path: string;
+}
+
+// Extract navigation items to be potentially reusable across the app
+export const defaultNavItems: NavigationItem[] = [
+  { icon: Home, label: "Home", path: "/" },
+  { icon: Search, label: "Explore", path: "/explore" },
+  { icon: MessageSquare, label: "Chats", path: "/chats" },
+  { icon: User, label: "Profile", path: "/profile" },
+];
+
+interface BottomNavigationProps {
+  navItems?: NavigationItem[];
+  className?: string;
+}
+
+const BottomNavigation = ({ 
+  navItems = defaultNavItems,
+  className 
+}: BottomNavigationProps) => {
+  const { isActive, navigateTo } = useNavigation();
   
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-primary border-t border-border flex justify-around items-center py-2 px-4 z-10 safe-bottom">
-      {navItems.map((item) => {
-        const isActive = location.pathname === item.path;
-        return (
-          <button
-            key={item.path}
-            className={cn(
-              "flex flex-col items-center justify-center py-1 px-3 rounded-lg transition-colors",
-              isActive ? "text-foreground font-medium" : "text-muted-foreground"
-            )}
-            onClick={() => navigate(item.path)}
-          >
-            <item.icon size={20} className={cn(isActive ? "text-foreground" : "text-muted-foreground")} />
-            <span className="text-xs mt-1">{item.label}</span>
-          </button>
-        );
-      })}
-    </div>
+    <nav 
+      className={cn(
+        "fixed bottom-0 left-0 right-0 bg-primary border-t border-border flex justify-around items-center py-2 px-4 z-10 safe-bottom",
+        className
+      )}
+      aria-label="Bottom navigation"
+    >
+      {navItems.map((item) => (
+        <NavItem
+          key={item.path}
+          item={item}
+          isActive={isActive(item.path)}
+          onClick={navigateTo}
+        />
+      ))}
+    </nav>
   );
 };
 
