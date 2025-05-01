@@ -23,7 +23,7 @@ const BottomNavigation = () => {
             key={item.path}
             className={cn(
               "flex flex-col items-center justify-center py-1 px-3 rounded-lg transition-colors",
-              isActive ? "text-foreground" : "text-muted-foreground"
+              isActive ? "text-foreground font-medium" : "text-muted-foreground"
             )}
             onClick={() => navigate(item.path)}
           >
