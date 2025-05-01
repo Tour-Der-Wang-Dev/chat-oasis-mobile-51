@@ -60,7 +60,7 @@
   }
   
   .bot-avatar {
-    @apply w-12 h-12 rounded-full border-2 border-muted overflow-hidden;
+    @apply w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-muted overflow-hidden;
   }
   
   .chat-container {
@@ -68,7 +68,7 @@
   }
   
   .message-input {
-    @apply bg-background border-t border-border px-4 py-3 flex items-center gap-2;
+    @apply bg-background border-t border-border px-3 sm:px-4 py-2 sm:py-3 flex items-center gap-2;
   }
   
   /* Mobile optimizations */
@@ -87,5 +87,29 @@
   
   .safe-top {
     padding-top: calc(env(safe-area-inset-top, 0));
+  }
+  
+  /* Enhanced mobile optimizations */
+  .tap-highlight-none {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .touch-action-manipulation {
+    touch-action: manipulation;
+  }
+  
+  /* Mobile-friendly button sizes */
+  .mobile-touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Fixed position header with proper z-index */
+  .mobile-header {
+    @apply sticky top-0 z-10 bg-primary shadow-sm;
+  }
+  
+  /* Improved mobile forms */
+  .mobile-input {
+    @apply py-3 px-4 text-base;
   }
 }

@@ -64,13 +64,18 @@ const SAMPLE_BOTS: Bot[] = [
 
 const CATEGORIES = ["Productivity", "Education", "Creativity", "Health", "Food", "Travel", "Career", "Wellness"];
 
+import MobileLayout from "@/components/MobileLayout";
+
 const ExplorePage = () => {
+  const pageHeader = (
+    <header className="bg-primary p-3 sm:p-4">
+      <h1 className="text-xl sm:text-2xl font-bold text-foreground">Explore</h1>
+      <p className="text-xs sm:text-sm text-muted-foreground">Discover AI chatbots</p>
+    </header>
+  );
+  
   return (
-    <div className="min-h-screen pb-20 safe-bottom">
-      <header className="bg-primary p-3 sm:p-4 shadow-sm safe-top">
-        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Explore</h1>
-        <p className="text-xs sm:text-sm text-muted-foreground">Discover AI chatbots</p>
-      </header>
+    <MobileLayout header={pageHeader}>
       
       <div className="p-3 sm:p-4">
         <div className="relative mb-5 sm:mb-6">
@@ -114,9 +119,7 @@ const ExplorePage = () => {
           </div>
         </div>
       </div>
-      
-      <BottomNavigation />
-    </div>
+    </MobileLayout>
   );
 };
 
