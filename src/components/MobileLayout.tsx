@@ -35,22 +35,31 @@ const MobileLayout = ({
     // Use passive event listeners for better scrolling performance
     main.addEventListener('scroll', preventPropagation, { passive: true });
     
-    // Add touch events for iOS - passive for better performance
+    // Optimized touch handling for iOS and Android
+    const handleTouchStart = () => {}; // Empty handler with passive optimization
+    const handleTouchMove = () => {}; // Empty handler with passive optimization
+    
+    // Prevent elastic overscroll effect on iOS with better memory management
+    const handleBodyTouchMove = (e: TouchEvent) => {
+      if (main.scrollTop <= 0 && main.scrollHeight > main.clientHeight) {
+        e.preventDefault();
+      }
+    };
+    
     if (isMobile) {
-      main.addEventListener('touchstart', () => {}, { passive: true });
-      main.addEventListener('touchmove', () => {}, { passive: true });
-      
-      // Prevent elastic overscroll effect on iOS
-      document.body.addEventListener('touchmove', (e) => {
-        if (main.scrollTop === 0 && main.scrollHeight > main.clientHeight) {
-          e.preventDefault();
-        }
-      }, { passive: false });
+      // Use optimized event listeners
+      main.addEventListener('touchstart', handleTouchStart, { passive: true });
+      main.addEventListener('touchmove', handleTouchMove, { passive: true });
+      document.body.addEventListener('touchmove', handleBodyTouchMove, { passive: false });
       
       // Apply scroll momentum optimizations
       if ('scrollBehavior' in document.documentElement.style) {
         main.style.scrollBehavior = 'smooth';
       }
+      
+      // Optimize browser rendering
+      main.style.backfaceVisibility = 'hidden';
+      main.style.perspective = '1000px';
     }
     
     // Optimize repaints during scrolling with a hint
@@ -59,9 +68,9 @@ const MobileLayout = ({
     return () => {
       main.removeEventListener('scroll', preventPropagation);
       if (isMobile) {
-        document.body.removeEventListener('touchmove', (e) => {
-          if (main.scrollTop === 0) e.preventDefault();
-        });
+        main.removeEventListener('touchstart', handleTouchStart);
+        main.removeEventListener('touchmove', handleTouchMove);
+        document.body.removeEventListener('touchmove', handleBodyTouchMove);
       }
       main.style.willChange = 'auto';
     };

@@ -19,7 +19,7 @@ const queryClient = new QueryClient();
 const AppContent = () => {
   const { isMobile, orientation } = useIsMobile();
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Add classes to the html element to help with CSS targeting
     if (isMobile !== undefined) {
       document.documentElement.classList.toggle('is-mobile', isMobile);

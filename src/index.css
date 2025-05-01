@@ -24,6 +24,8 @@
     height: 100%;
     overflow: hidden;
     height: -webkit-fill-available; /* Fix for iOS height issues */
+    touch-action: manipulation; /* Better touch action handling */
+    -webkit-text-size-adjust: 100%; /* Prevent iOS text size adjustment */
   }
   
   body {
@@ -47,6 +49,24 @@
     touch-action: manipulation;
     cursor: pointer;
     min-height: 44px; /* Minimum touch target size per iOS guidelines */
+  }
+  
+  /* Mobile touch target - improved touch area */
+  .mobile-touch-target {
+    position: relative;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Remove tap highlight color on mobile elements */
+  .tap-highlight-none {
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+  }
+  
+  /* Better touch action manipulation */
+  .touch-action-manipulation {
+    touch-action: manipulation;
   }
   
   /* Prevent text resizing when orientation changes */
