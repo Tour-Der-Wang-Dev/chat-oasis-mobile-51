@@ -14,6 +14,7 @@
     -webkit-user-select: none; /* Safari-specific */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
   }
   
   /* Prevent pull-to-refresh in mobile browsers */
@@ -22,11 +23,13 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    height: -webkit-fill-available; /* Fix for iOS height issues */
   }
   
   body {
     width: 100%;
     height: 100%;
+    height: -webkit-fill-available; /* Fix for iOS height issues */
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -35,11 +38,33 @@
   .momentum-scroll {
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
+    backface-visibility: hidden; /* Prevent blurry text during scroll */
+    transform: translateZ(0); /* Force GPU acceleration */
   }
   
   /* Improve touch response */
   button, a, input, [role="button"] {
     touch-action: manipulation;
+    cursor: pointer;
+    min-height: 44px; /* Minimum touch target size per iOS guidelines */
+  }
+  
+  /* Prevent text resizing when orientation changes */
+  * {
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  /* Fix for iOS vh issue */
+  .min-h-screen, .mobile-full-height {
+    min-height: 100vh; /* Fallback */
+    min-height: calc(var(--vh, 1vh) * 100);
+  }
+  
+  /* Improve transitions */
+  .smooth-appearance {
+    will-change: opacity, transform;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 }
 

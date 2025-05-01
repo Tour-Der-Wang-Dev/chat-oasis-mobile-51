@@ -8,7 +8,7 @@ const BottomNavigation = () => {
   const location = useLocation();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-16 bg-background border-t flex items-center justify-around px-2 safe-bottom z-10 shadow-sm">
+    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-background border-t flex items-center justify-around px-2 safe-bottom z-10 shadow-sm will-change-transform">
       <NavItem 
         to="/" 
         icon={<Home size={22} />} 
@@ -33,7 +33,7 @@ const BottomNavigation = () => {
         label="Profile" 
         isActive={location.pathname === "/profile"} 
       />
-    </div>
+    </nav>
   );
 };
 

@@ -17,7 +17,8 @@ export function useIsMobile() {
         typeof window.navigator === "undefined" ? "" : navigator.userAgent
       const mobileRegex = 
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
-      return mobileRegex.test(userAgent) || window.innerWidth < MOBILE_BREAKPOINT
+      const touchEnabled = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+      return mobileRegex.test(userAgent) || touchEnabled || window.innerWidth < MOBILE_BREAKPOINT
     }
 
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
@@ -26,18 +27,30 @@ export function useIsMobile() {
       setIsMobile(checkIfMobile())
     }
     
+    // Debounce orientation changes for better performance
+    let orientationTimeout: number | null = null;
     const handleOrientationChange = () => {
-      setOrientation(window.innerHeight > window.innerWidth ? 'portrait' : 'landscape')
+      if (orientationTimeout) {
+        window.clearTimeout(orientationTimeout);
+      }
+      
+      orientationTimeout = window.setTimeout(() => {
+        setOrientation(window.innerHeight > window.innerWidth ? 'portrait' : 'landscape');
+      }, 100);
     }
     
     mql.addEventListener("change", onChange)
     window.addEventListener("resize", handleOrientationChange, { passive: true })
     window.addEventListener("orientationchange", handleOrientationChange, { passive: true })
     
+    // Initial check
     setIsMobile(checkIfMobile())
     handleOrientationChange()
     
     return () => {
+      if (orientationTimeout) {
+        window.clearTimeout(orientationTimeout);
+      }
       mql.removeEventListener("change", onChange)
       window.removeEventListener("resize", handleOrientationChange)
       window.removeEventListener("orientationchange", handleOrientationChange)

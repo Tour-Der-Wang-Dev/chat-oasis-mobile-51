@@ -20,13 +20,37 @@ const MobileLayout = ({
   className
 }: MobileLayoutProps) => {
   const { isMobile } = useIsMobile();
+  const mainRef = React.useRef<HTMLDivElement>(null);
+  
+  // Add momentum scrolling optimization
+  React.useEffect(() => {
+    const main = mainRef.current;
+    if (!main) return;
+    
+    // Prevent scroll event propagation to parent
+    const preventPropagation = (e: Event) => {
+      e.stopPropagation();
+    };
+    
+    main.addEventListener('scroll', preventPropagation, { passive: true });
+    
+    // Add touch events for iOS
+    if (isMobile) {
+      main.addEventListener('touchstart', () => {}, { passive: true });
+    }
+    
+    return () => {
+      main.removeEventListener('scroll', preventPropagation);
+    };
+  }, [isMobile]);
   
   return (
     <div className={cn(
       "flex flex-col",
-      fullHeight && "min-h-[100dvh] mobile-full-height", // Use dynamic viewport height for better mobile experience
+      fullHeight && "min-h-[100dvh] min-h-[calc(var(--vh,1vh)*100)] mobile-full-height", // Use dynamic viewport height
       "w-full max-w-md mx-auto", // Constrain width on larger screens
       "overscroll-none", // Prevent bouncing/pull-to-refresh on iOS
+      "will-change-transform", // GPU acceleration hint
       className
     )}>
       {header && (
@@ -35,11 +59,15 @@ const MobileLayout = ({
         </div>
       )}
       
-      <main className={cn(
-        "flex-1 overflow-y-auto hide-scrollbar",
-        "touch-action-manipulation tap-highlight-none",
-        !hideNavigation && "pb-20 safe-bottom"
-      )}>
+      <main 
+        ref={mainRef}
+        className={cn(
+          "flex-1 overflow-y-auto hide-scrollbar momentum-scroll",
+          "touch-action-manipulation tap-highlight-none",
+          "will-change-scroll", // Hint for scroll optimization
+          !hideNavigation && "pb-20 safe-bottom"
+        )}
+      >
         {children}
       </main>
       
