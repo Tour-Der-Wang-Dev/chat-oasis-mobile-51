@@ -24,18 +24,20 @@ const MobileLayout = ({
   return (
     <div className={cn(
       "flex flex-col",
-      fullHeight && "min-h-[100dvh]", // Use dynamic viewport height for better mobile experience
+      fullHeight && "min-h-[100dvh] mobile-full-height", // Use dynamic viewport height for better mobile experience
       "w-full max-w-md mx-auto", // Constrain width on larger screens
+      "overscroll-none", // Prevent bouncing/pull-to-refresh on iOS
       className
     )}>
       {header && (
-        <div className="mobile-header safe-top">
+        <div className="mobile-header safe-top touch-action-manipulation">
           {header}
         </div>
       )}
       
       <main className={cn(
         "flex-1 overflow-y-auto hide-scrollbar",
+        "touch-action-manipulation tap-highlight-none",
         !hideNavigation && "pb-20 safe-bottom"
       )}>
         {children}

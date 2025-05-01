@@ -31,8 +31,8 @@ export function useIsMobile() {
     }
     
     mql.addEventListener("change", onChange)
-    window.addEventListener("resize", handleOrientationChange)
-    window.addEventListener("orientationchange", handleOrientationChange)
+    window.addEventListener("resize", handleOrientationChange, { passive: true })
+    window.addEventListener("orientationchange", handleOrientationChange, { passive: true })
     
     setIsMobile(checkIfMobile())
     handleOrientationChange()
