@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,7 +13,6 @@ import AccountSettings from "@/components/AccountSettings";
 import TourDerWang from "@/pages/TourDerWang";
 import NotFound from "@/pages/NotFound";
 import { useIsMobile } from "./hooks/use-mobile";
-import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
