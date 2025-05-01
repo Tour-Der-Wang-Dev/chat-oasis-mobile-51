@@ -1,28 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export function useNavigation() {
+export const useNavigation = () => {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState<string>('/');
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [activeTab, setActiveTab] = useState(location.pathname);
 
+  // Handle special cases for routing
   useEffect(() => {
-    // Update active tab based on current path
-    const path = location.pathname;
-    if (path === '/') setActiveTab('/');
-    else if (path.startsWith('/explore')) setActiveTab('/explore');
-    else if (path.startsWith('/chat') || path.startsWith('/chats')) setActiveTab('/chats');
-    else if (path.startsWith('/profile')) setActiveTab('/profile');
+    // Set the current path as active
+    setActiveTab(location.pathname);
 
-    // Add transition effect
-    setIsTransitioning(true);
-    const timer = setTimeout(() => setIsTransitioning(false), 300);
+    // Special case: For path patterns like /chat/:id, also highlight chats tab
+    if (location.pathname.startsWith('/chat/')) {
+      setActiveTab('/chats');
+    }
+  }, [location.pathname]);
 
-    return () => clearTimeout(timer);
-  }, [location]);
+  const setActive = useCallback((tab: string) => {
+    setActiveTab(tab);
+  }, []);
 
-  return {
-    activeTab,
-    isTransitioning
+  // Add memoized helpers for common tab checks
+  const isHome = activeTab === '/';
+  const isExplore = activeTab === '/explore';
+  const isChats = activeTab === '/chats' || location.pathname.startsWith('/chat/');
+  const isProfile = activeTab === '/profile';
+
+  return { 
+    activeTab, 
+    setActive, 
+    isHome,
+    isExplore,
+    isChats,
+    isProfile
   };
-}
+};

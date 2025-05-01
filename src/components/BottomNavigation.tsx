@@ -8,7 +8,7 @@ import { useNavigation } from "@/hooks/use-navigation";
 const BottomNavigation: React.FC = () => {
   const { activeTab } = useNavigation();
 
-  // Memoize navigation items to prevent unnecessary re-renders
+  // Optimized navigation items with better Thai translations
   const navItems = React.useMemo(() => [
     {
       icon: Home,
@@ -34,16 +34,23 @@ const BottomNavigation: React.FC = () => {
 
   // Reduce layout thrashing with passive event handlers
   React.useEffect(() => {
-    document.querySelectorAll('.nav-item').forEach(el => {
-      el.addEventListener('touchstart', () => {}, { passive: true });
-    });
+    const addPassiveListeners = () => {
+      document.querySelectorAll('.nav-item').forEach(el => {
+        el.addEventListener('touchstart', () => {}, { passive: true });
+      });
+    };
+    
+    // Add listeners with a small delay to ensure DOM is ready
+    const timer = setTimeout(addPassiveListeners, 100);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <nav className={cn(
-      "fixed bottom-0 left-0 right-0 z-50 bg-primary shadow-md px-2 py-1 safe-bottom",
+      "fixed bottom-0 left-0 right-0 z-50 bg-primary shadow-lg px-2 py-1 safe-bottom",
       "max-w-md mx-auto",
-      "will-change-transform translate-z-0" // Hardware acceleration
+      "will-change-transform translate-z-0", // Hardware acceleration
+      "border-t border-accent/10" // Subtle top border
     )}>
       <div className="flex items-center justify-around">
         {navItems.map(({ icon: Icon, label, path }) => {
@@ -57,7 +64,9 @@ const BottomNavigation: React.FC = () => {
                 "flex flex-col items-center justify-center py-1 nav-item", 
                 "w-1/4 mobile-touch-target", // Equal distribution, better touch targets
                 "touch-action-manipulation", // Better touch handling
-                "tap-highlight-none" // Remove tap highlight
+                "tap-highlight-none", // Remove tap highlight
+                "active:scale-95 transition-transform", // Touch feedback
+                "select-none" // Prevent text selection
               )}
               aria-label={label}
               aria-current={isActive ? "page" : undefined}
@@ -70,7 +79,7 @@ const BottomNavigation: React.FC = () => {
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       exit={{ scale: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
                     />
                   )}
                 </AnimatePresence>
