@@ -22,20 +22,20 @@ const ChatHeader = ({ botName, botAvatar, botStatus = "online", onBack }: ChatHe
   };
 
   return (
-    <div className="bg-primary p-4 flex items-center justify-between shadow-sm border-b border-border">
+    <div className="bg-primary p-3 sm:p-4 flex items-center justify-between shadow-sm border-b border-border safe-top">
       <div className="flex items-center gap-3">
         <button 
           onClick={handleBack} 
-          className="p-1 rounded-full hover:bg-muted"
+          className="p-1 rounded-full hover:bg-muted active:bg-muted/80 touch-action-manipulation"
         >
-          <ArrowLeft size={22} />
+          <ArrowLeft size={20} />
         </button>
-        <Avatar className="h-10 w-10 border border-border">
+        <Avatar className="h-9 w-9 sm:h-10 sm:w-10 border border-border">
           <AvatarImage src={botAvatar} alt={botName} />
           <AvatarFallback>{botName.slice(0, 2)}</AvatarFallback>
         </Avatar>
         <div>
-          <h3 className="font-medium text-foreground">{botName}</h3>
+          <h3 className="font-medium text-foreground text-sm sm:text-base">{botName}</h3>
           <div className="flex items-center gap-1.5">
             <span className={`w-2 h-2 rounded-full ${
               botStatus === "online" ? "bg-green-500" :
@@ -46,12 +46,12 @@ const ChatHeader = ({ botName, botAvatar, botStatus = "online", onBack }: ChatHe
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-3">
-        <button className="p-1.5 rounded-full hover:bg-muted">
-          <Bell size={20} />
+      <div className="flex items-center gap-2 sm:gap-3">
+        <button className="p-1.5 rounded-full hover:bg-muted active:bg-muted/80 touch-action-manipulation">
+          <Bell size={18} />
         </button>
-        <button className="p-1.5 rounded-full hover:bg-muted">
-          <Settings size={20} />
+        <button className="p-1.5 rounded-full hover:bg-muted active:bg-muted/80 touch-action-manipulation">
+          <Settings size={18} />
         </button>
       </div>
     </div>

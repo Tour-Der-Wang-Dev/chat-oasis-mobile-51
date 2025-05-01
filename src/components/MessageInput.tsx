@@ -26,19 +26,19 @@ const MessageInput = ({
 
   return (
     <div className="message-input">
-      <form onSubmit={handleSubmit} className="flex-1 flex gap-2">
+      <form onSubmit={handleSubmit} className="flex-1 flex gap-2 w-full max-w-screen-lg mx-auto">
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder={placeholder}
           disabled={disabled}
-          className="flex-1 bg-muted/50 rounded-full px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-ring"
+          className="flex-1 bg-muted/50 rounded-full px-4 py-2.5 text-sm sm:text-base focus:outline-none focus:ring-1 focus:ring-ring"
         />
         <Button
           type="submit"
           size="icon"
-          className="rounded-full bg-accent hover:bg-accent/80"
+          className="rounded-full bg-accent hover:bg-accent/80 active:bg-accent/70 touch-action-manipulation"
           disabled={!message.trim() || disabled}
         >
           <ArrowUp size={18} />

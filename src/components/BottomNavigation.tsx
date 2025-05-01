@@ -15,14 +15,14 @@ const BottomNavigation = () => {
   ];
   
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-primary border-t border-border flex justify-around items-center py-2 px-4 z-10">
+    <div className="fixed bottom-0 left-0 right-0 bg-primary border-t border-border flex justify-around items-center py-2 px-4 z-10 safe-bottom">
       {navItems.map((item) => {
         const isActive = location.pathname === item.path;
         return (
           <button
             key={item.path}
             className={cn(
-              "flex flex-col items-center justify-center py-1 px-3 rounded-lg",
+              "flex flex-col items-center justify-center py-1 px-3 rounded-lg transition-colors",
               isActive ? "text-foreground" : "text-muted-foreground"
             )}
             onClick={() => navigate(item.path)}

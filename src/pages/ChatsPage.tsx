@@ -60,37 +60,37 @@ const ChatsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen pb-16">
-      <header className="bg-primary p-4 shadow-sm">
-        <h1 className="text-2xl font-bold text-foreground">Conversations</h1>
-        <p className="text-sm text-muted-foreground">Your recent chats</p>
+    <div className="min-h-screen pb-20 safe-bottom">
+      <header className="bg-primary p-3 sm:p-4 shadow-sm safe-top">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Conversations</h1>
+        <p className="text-xs sm:text-sm text-muted-foreground">Your recent chats</p>
       </header>
       
-      <main className="p-4">
+      <main className="p-3 sm:p-4">
         <div className="space-y-2">
           {SAMPLE_CHATS.map((chat) => (
             <div 
               key={chat.id}
-              className="p-3 rounded-xl bg-card flex items-center gap-3 cursor-pointer hover:bg-accent/30 transition-colors"
+              className="p-2.5 sm:p-3 rounded-xl bg-card flex items-center gap-3 cursor-pointer hover:bg-accent/30 active:bg-accent/50 transition-colors"
               onClick={() => navigate(`/chat/${chat.botId}`)}
             >
-              <Avatar className="h-12 w-12">
+              <Avatar className="h-10 w-10 sm:h-12 sm:w-12">
                 <AvatarImage src={chat.botAvatar} alt={chat.botName} />
                 <AvatarFallback>{chat.botName.slice(0, 2)}</AvatarFallback>
               </Avatar>
               
               <div className="flex-1 min-w-0">
                 <div className="flex justify-between items-baseline">
-                  <h3 className="font-medium text-foreground">{chat.botName}</h3>
+                  <h3 className="font-medium text-foreground text-sm sm:text-base">{chat.botName}</h3>
                   <span className="text-xs text-muted-foreground">
                     {formatTimestamp(chat.timestamp)}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
               </div>
               
               {chat.unread > 0 && (
-                <div className="bg-accent w-5 h-5 rounded-full flex items-center justify-center">
+                <div className="bg-accent w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-medium">{chat.unread}</span>
                 </div>
               )}

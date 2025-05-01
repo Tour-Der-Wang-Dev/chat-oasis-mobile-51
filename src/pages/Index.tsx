@@ -52,30 +52,30 @@ const Index = () => {
     : SAMPLE_BOTS.filter(bot => bot.category === activeCategory);
 
   return (
-    <div className="min-h-screen pb-16">
-      <header className="bg-primary p-4 shadow-sm">
-        <h1 className="text-2xl font-bold text-foreground">Chat Oasis</h1>
-        <p className="text-sm text-muted-foreground">Your AI companions</p>
+    <div className="min-h-screen pb-20 safe-bottom">
+      <header className="bg-primary p-3 sm:p-4 shadow-sm safe-top">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Chat Oasis</h1>
+        <p className="text-xs sm:text-sm text-muted-foreground">Your AI companions</p>
       </header>
       
-      <main className="p-4">
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-3">Featured Chatbots</h2>
+      <main className="p-3 sm:p-4">
+        <div className="mb-5 sm:mb-6">
+          <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-left">Featured Chatbots</h2>
           <Tabs defaultValue="All" className="w-full">
-            <TabsList className="mb-4 flex overflow-x-auto pb-2 hide-scrollbar">
+            <TabsList className="mb-3 sm:mb-4 flex overflow-x-auto pb-1 sm:pb-2 hide-scrollbar">
               {CATEGORIES.map((category) => (
                 <TabsTrigger 
                   key={category} 
                   value={category}
                   onClick={() => setActiveCategory(category)}
-                  className="bg-muted/50"
+                  className="bg-muted/50 text-xs sm:text-sm flex-shrink-0"
                 >
                   {category}
                 </TabsTrigger>
               ))}
             </TabsList>
             <TabsContent value={activeCategory} className="mt-0">
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-3 sm:gap-4">
                 {filteredBots.map((bot) => (
                   <BotCard key={bot.id} bot={bot} />
                 ))}
@@ -84,10 +84,10 @@ const Index = () => {
           </Tabs>
         </div>
         
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-3">Recent Conversations</h2>
-          <div className="bg-card rounded-xl p-6 text-center">
-            <p className="text-muted-foreground">Start chatting with a bot to see your recent conversations here.</p>
+        <div className="mt-6 sm:mt-8">
+          <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-left">Recent Conversations</h2>
+          <div className="bg-card rounded-xl p-4 sm:p-6 text-center">
+            <p className="text-sm text-muted-foreground">Start chatting with a bot to see your recent conversations here.</p>
           </div>
         </div>
       </main>

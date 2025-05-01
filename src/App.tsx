@@ -10,24 +10,41 @@ import ChatPage from "./pages/ChatPage";
 import ChatsPage from "./pages/ChatsPage";
 import ExplorePage from "./pages/ExplorePage";
 import ProfilePage from "./pages/ProfilePage";
+import { useIsMobile } from "./hooks/use-mobile";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  const isMobile = useIsMobile();
+  
+  useEffect(() => {
+    // Add a class to the html element to help with CSS targeting
+    if (isMobile !== undefined) {
+      document.documentElement.classList.toggle('is-mobile', isMobile);
+    }
+  }, [isMobile]);
+  
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/chat/:botId" element={<ChatPage />} />
+        <Route path="/chats" element={<ChatsPage />} />
+        <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/chat/:botId" element={<ChatPage />} />
-          <Route path="/chats" element={<ChatsPage />} />
-          <Route path="/explore" element={<ExplorePage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <AppContent />
     </TooltipProvider>
   </QueryClientProvider>
 );

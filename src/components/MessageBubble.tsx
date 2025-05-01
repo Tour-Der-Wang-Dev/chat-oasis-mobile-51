@@ -22,17 +22,17 @@ const MessageBubble = ({ message, showAvatar = true }: MessageBubbleProps) => {
   
   return (
     <div className={cn(
-      "flex gap-3 mb-4 w-full animate-bubble-in",
+      "flex gap-2 sm:gap-3 mb-3 sm:mb-4 w-full animate-bubble-in",
       isAi ? "justify-start" : "justify-end"
     )}>
       {isAi && showAvatar && (
-        <Avatar className="h-8 w-8 mt-1 flex-shrink-0">
+        <Avatar className="h-7 w-7 sm:h-8 sm:w-8 mt-1 flex-shrink-0">
           <AvatarImage src={message.botAvatar} alt={message.botName} />
           <AvatarFallback>{message.botName?.slice(0, 2) || "AI"}</AvatarFallback>
         </Avatar>
       )}
       <div className={cn(
-        "chat-bubble",
+        "chat-bubble text-sm sm:text-base",
         isAi ? "chat-bubble-ai" : "chat-bubble-user"
       )}>
         <p className="text-sm">{message.content}</p>
@@ -41,7 +41,7 @@ const MessageBubble = ({ message, showAvatar = true }: MessageBubbleProps) => {
         </div>
       </div>
       {!isAi && showAvatar && (
-        <div className="w-8" />
+        <div className="w-7 sm:w-8" />
       )}
     </div>
   );

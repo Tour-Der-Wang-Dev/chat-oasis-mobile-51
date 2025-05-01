@@ -66,29 +66,29 @@ const CATEGORIES = ["Productivity", "Education", "Creativity", "Health", "Food",
 
 const ExplorePage = () => {
   return (
-    <div className="min-h-screen pb-16">
-      <header className="bg-primary p-4 shadow-sm">
-        <h1 className="text-2xl font-bold text-foreground">Explore</h1>
-        <p className="text-sm text-muted-foreground">Discover AI chatbots</p>
+    <div className="min-h-screen pb-20 safe-bottom">
+      <header className="bg-primary p-3 sm:p-4 shadow-sm safe-top">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Explore</h1>
+        <p className="text-xs sm:text-sm text-muted-foreground">Discover AI chatbots</p>
       </header>
       
-      <div className="p-4">
-        <div className="relative mb-6">
+      <div className="p-3 sm:p-4">
+        <div className="relative mb-5 sm:mb-6">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={18} />
           <input
             type="text"
             placeholder="Search chatbots..."
-            className="w-full pl-10 pr-4 py-3 rounded-full bg-muted/50 focus:outline-none focus:ring-1 focus:ring-ring"
+            className="w-full pl-10 pr-4 py-2.5 sm:py-3 rounded-full bg-muted/50 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
           />
         </div>
         
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-3">Categories</h2>
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-left">Categories</h2>
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map((category) => (
               <span 
                 key={category}
-                className="px-3 py-1.5 bg-muted rounded-full text-sm cursor-pointer hover:bg-accent/50 transition-colors"
+                className="px-2.5 py-1 sm:px-3 sm:py-1.5 bg-muted rounded-full text-xs sm:text-sm cursor-pointer hover:bg-accent/50 active:bg-accent/80 transition-colors"
               >
                 {category}
               </span>
@@ -96,9 +96,9 @@ const ExplorePage = () => {
           </div>
         </div>
         
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold mb-3">Popular Chatbots</h2>
-          <div className="grid grid-cols-1 gap-4">
+        <div className="mb-5 sm:mb-6">
+          <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-left">Popular Chatbots</h2>
+          <div className="grid grid-cols-1 gap-3 sm:gap-4">
             {SAMPLE_BOTS.slice(0, 4).map((bot) => (
               <BotCard key={bot.id} bot={bot} />
             ))}
@@ -106,8 +106,8 @@ const ExplorePage = () => {
         </div>
         
         <div>
-          <h2 className="text-lg font-semibold mb-3">All Chatbots</h2>
-          <div className="grid grid-cols-1 gap-4">
+          <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-left">All Chatbots</h2>
+          <div className="grid grid-cols-1 gap-3 sm:gap-4">
             {SAMPLE_BOTS.map((bot) => (
               <BotCard key={bot.id} bot={bot} />
             ))}
