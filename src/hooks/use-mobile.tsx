@@ -1,3 +1,4 @@
+
 import * as React from "react"
 
 const MOBILE_BREAKPOINT = 768
@@ -10,29 +11,30 @@ export function useIsMobile() {
       : 'portrait'
   )
 
-  React.useEffect(() => {
-    // Check for mobile devices via user agent as a fallback
-    // Memoized mobile detection for better performance
+  // Memoized mobile detection for better performance - moved outside useEffect
   const checkIfMobile = React.useCallback(() => {
-      // Use feature detection first (most reliable)
-      const hasTouchScreen = (
-        'ontouchstart' in window || 
-        navigator.maxTouchPoints > 0 ||
-        // @ts-ignore - MS Surface detection
-        (navigator.msMaxTouchPoints > 0)
-      );
-      
-      // Then screen size as fallback
-      const isSmallScreen = window.innerWidth < MOBILE_BREAKPOINT;
-      
-      // Then UA as last resort
-      const userAgent = typeof window.navigator === "undefined" ? "" : navigator.userAgent;
-      const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-      
-      // Combine all signals
-      return hasTouchScreen || isSmallScreen || mobileUA;
-    }, []);
+    if (typeof window === 'undefined') return false;
+    
+    // Use feature detection first (most reliable)
+    const hasTouchScreen = (
+      'ontouchstart' in window || 
+      navigator.maxTouchPoints > 0 ||
+      // @ts-ignore - MS Surface detection
+      (navigator.msMaxTouchPoints > 0)
+    );
+    
+    // Then screen size as fallback
+    const isSmallScreen = window.innerWidth < MOBILE_BREAKPOINT;
+    
+    // Then UA as last resort
+    const userAgent = typeof window.navigator === "undefined" ? "" : navigator.userAgent;
+    const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    
+    // Combine all signals
+    return hasTouchScreen || isSmallScreen || mobileUA;
+  }, []);
 
+  React.useEffect(() => {
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
     
     const onChange = () => {
@@ -67,7 +69,7 @@ export function useIsMobile() {
       window.removeEventListener("resize", handleOrientationChange)
       window.removeEventListener("orientationchange", handleOrientationChange)
     }
-  }, [])
+  }, [checkIfMobile]) // Added checkIfMobile as a dependency
 
   return {
     isMobile: !!isMobile,
