@@ -1,0 +1,68 @@
+เพิ่มรายระเอียด prompts lovable.dev ให้ถามกลับเพื่อเพิ่มรายระเอียด APIs Ai และ supabase 
+
+(Design a mobile AI chatbot assistant interface for Tour Der Wang (ทัวร์ เดอ วังฯ) center tourism service that embodies Esan cultural elegance while delivering modern functionality. Create detailed mockups and specifications for the following:
+
+Interface Design:
+- Primary color: #FFDEAD (Navajo White) with complementary Thai-inspired accent colors
+- Typography: Use Sukhumvit Set for Thai text and Roboto for English
+- Maintain consistent 16px spacing and rounded corners (12px radius) throughout
+- Implement a floating chat bubble that's always accessible
+- Design all UI elements following iOS and Material Design guidelines
+
+Core Features (detail exact placement and interaction):
+1. Chat Interface:
+- Persistent chat window with expandable/collapsible behavior
+- AI response indicators with typing animations
+- Quick-reply buttons for common queries
+- Voice input support with language detection
+
+2. Location Services:
+- Interactive map centered on Wang Sam Mo
+- Points of interest markers with custom Thai-styled icons
+- Real-time location tracking with permission handling
+- Distance calculator from user's location
+
+3. Gallery Component:
+- Grid layout with 3x3 thumbnail preview
+- Full-screen image viewer with pinch-to-zoom
+- Auto-loading carousel for featured locations
+- Photo tagging system for tour locations
+
+4. Booking System:
+- Step-by-step booking wizard
+- Calendar view with Thai Buddhist calendar support
+- Real-time availability checker
+- Secure payment integration interface
+
+5. Language Toggle:
+- Prominent language switch in header
+- Auto-detection of device language
+- Smooth transition animations between languages
+- Maintain layout consistency across languages
+
+Technical Specifications:
+1. API Integration:
+- RESTful API architecture
+- WebSocket implementation for real-time chat
+- JWT authentication system
+- Rate limiting and error handling
+
+2. Responsive Behaviors:
+- Breakpoints at 320px, 375px, 414px, and 428px
+- Dynamic font scaling
+- Flexible grid system
+- Touch-optimized interaction areas (minimum 44x44px)
+
+3. Loading States:
+- Skeleton screens for content loading
+- Progressive image loading
+- Optimistic UI updates
+- Custom branded loading animations
+
+4. Brand Implementation:
+- Logo placement in header (56px height)
+- Consistent brand color application
+- Custom iconography matching brand style
+- Watermark on gallery images
+
+Provide detailed wireframes and interaction specifications for each component, including exact measurements, color codes, and animation timings.)

@@ -1,0 +1,131 @@
+To enhance the provided prompt for lovable.dev, I’ll refine it to include explicit requests for the user to provide additional details about the AI APIs and Supabase integration. The goal is to make the prompt more interactive, ensuring the developer gathers sufficient information to implement the APIs and Supabase functionality effectively while maintaining the original structure and requirements. Below is the revised prompt with added questions to elicit more details about AI APIs and Supabase, ensuring clarity and specificity.
+
+---
+
+### Enhanced Prompt for lovable.dev
+
+Design a mobile AI chatbot assistant interface for **Tour Der Wang (ทัวร์ เดอ วังฯ)**, a center tourism service that embodies Esan cultural elegance while delivering modern functionality. Create detailed mockups and specifications for the following, ensuring the design reflects Thai cultural aesthetics and technical robustness. As part of the development process, please provide additional details about the AI APIs and Supabase integration by answering the questions embedded below.
+
+---
+
+### Interface Design
+- **Primary Color**: #FFDEAD (Navajo White) with complementary Thai-inspired accent colors (e.g., gold, maroon, emerald green). Specify exact hex codes for accent colors.
+- **Typography**: Use **Sukhumvit Set** for Thai text and **Roboto** for English. Define font weights (e.g., Light, Medium, Bold) for each use case.
+- **Spacing and Corners**: Maintain consistent 16px spacing and rounded corners (12px radius) for all UI elements.
+- **Floating Chat Bubble**: Design an always-accessible floating chat bubble with a 56px diameter, positioned at the bottom-right corner (16px from edges). Include hover/tap animations.
+- **Design Guidelines**: Follow **iOS Human Interface Guidelines** and **Material Design** principles for button sizes, touch targets, and navigation patterns.
+
+---
+
+### Core Features (Detail Exact Placement and Interaction)
+
+1. **Chat Interface**:
+   - **Layout**: Persistent chat window at the bottom of the screen, expandable to full-screen with a smooth 300ms slide-up animation. Collapsible via a downward swipe or "X" button (24px, top-right).
+   - **AI Indicators**: Show typing animations (e.g., three bouncing dots) during AI response generation, with a 1.5s cycle.
+   - **Quick-Reply Buttons**: Display up to 4 quick-reply buttons (120px wide, 40px tall) below the chat input for common queries (e.g., "Book a Tour", "View Map"). Use #FFD700 (Gold) for button backgrounds.
+   - **Voice Input**: Include a microphone icon (32px) in the chat input field. Support Thai and English with automatic language detection. Show a 2s pulsating animation during recording.
+   - **Interaction**: Tap to expand, long-press to copy messages, swipe left to delete.
+
+2. **Location Services**:
+   - **Map**: Embed an interactive map centered on Wang Sam Mo (coordinates: 16.3833°N, 103.5000°E) using a map provider (e.g., Google Maps or Mapbox). Default zoom level: 12.
+   - **Markers**: Use custom Thai-styled icons (e.g., lotus-shaped, 40px) for points of interest. Include pop-ups with brief descriptions (max 100 characters).
+   - **Tracking**: Implement real-time location tracking with a permission prompt on first use. Show user’s location with a blue dot (16px).
+   - **Distance Calculator**: Display distance (in km) from user’s location to selected points in a fixed bottom sheet (120px height).
+   - **Interaction**: Pinch to zoom, tap markers for details, double-tap to re-center.
+
+3. **Gallery Component**:
+   - **Layout**: 3x3 grid of thumbnails (100x100px, 8px spacing) in a scrollable view.
+   - **Viewer**: Full-screen image viewer with pinch-to-zoom (up to 3x) and swipe-to-navigate. Include a close button (32px, top-right).
+   - **Carousel**: Auto-rotating carousel at the top (300px height) for featured locations, with 3s transition intervals.
+   - **Tagging**: Allow photo tagging with predefined categories (e.g., "Temple", "Market"). Store tags in Supabase.
+   - **Interaction**: Tap thumbnail to open viewer, long-press to tag.
+
+4. **Booking System**:
+   - **Wizard**: 3-step booking wizard (Select Tour → Choose Date → Confirm Payment) in a modal view (90% screen height).
+   - **Calendar**: Display a calendar with Thai Buddhist calendar support (e.g., show BE 2568). Highlight available dates in #00FF7F (Spring Green).
+   - **Availability**: Check real-time availability via API, showing a loading spinner (24px) during queries.
+   - **Payment**: Integrate a secure payment interface (e.g., Stripe) with a "Pay Now" button (160px wide, 48px tall).
+   - **Interaction**: Tap to select dates, swipe to navigate steps, confirm with a double-tap.
+
+5. **Language Toggle**:
+   - **Placement**: Position a language switcher in the header (48px height, right-aligned) with "TH" and "EN" buttons.
+   - **Auto-Detection**: Detect device language on first load, with a fallback to Thai.
+   - **Animations**: Use a 200ms fade transition for language changes.
+   - **Consistency**: Ensure layout (padding, alignment) remains identical across languages.
+   - **Interaction**: Tap to switch, with a subtle scale animation (1.1x).
+
+---
+
+### Technical Specifications
+
+1. **API Integration**:
+   - **Architecture**: Use RESTful APIs for data fetching (e.g., tour details, booking availability) and WebSocket for real-time chat updates.
+   - **Authentication**: Implement JWT-based authentication with token refresh every 15 minutes.
+   - **Rate Limiting**: Enforce 100 requests/hour per user to prevent abuse.
+   - **Error Handling**: Display user-friendly error messages (e.g., "Network error, please try again") with retry buttons.
+   - **AI API Questions**:
+     - Which AI API will be used for the chatbot (e.g., OpenAI, Google Dialogflow, or xAI’s API)? Please specify the provider and model (if applicable).
+     - What are the specific AI functionalities required (e.g., natural language understanding, intent recognition, sentiment analysis)?
+     - Are there any rate limits or quotas for the AI API we should account for in the design?
+     - Should the AI support custom training data (e.g., Esan cultural phrases or tour-specific terms)? If so, please provide details on the dataset or training process.
+
+2. **Responsive Behaviors**:
+   - **Breakpoints**: Optimize for 320px (iPhone SE), 375px (iPhone 13), 414px (iPhone 14 Pro Max), and 428px (Pixel 7).
+   - **Font Scaling**: Adjust font sizes dynamically (e.g., 14px at 320px, 16px at 375px+).
+   - **Grid System**: Use a flexible 12-column grid with 8px gutters.
+   - **Touch Areas**: Ensure all interactive elements are at least 44x44px.
+
+3. **Loading States**:
+   - **Skeleton Screens**: Show gray placeholders (e.g., rectangles for images, lines for text) during content loading.
+   - **Image Loading**: Implement progressive loading with a blur-up effect (200ms transition).
+   - **Optimistic Updates**: Update UI immediately for user actions (e.g., booking confirmation) with a rollback on failure.
+   - **Animations**: Use a custom spinning lotus icon (32px) for loading, rotating at 1 cycle/second.
+
+4. **Brand Implementation**:
+   - **Logo**: Place the Tour Der Wang logo (56px height) in the header, centered.
+   - **Colors**: Apply #FFDEAD consistently for backgrounds, with accent colors for buttons and highlights.
+   - **Icons**: Design custom iconography (e.g., lotus, temple) in a minimalist Thai style, 24px size.
+   - **Watermark**: Add a semi-transparent logo watermark (20% opacity) on gallery images, bottom-right.
+
+5. **Supabase Integration**:
+   - **Database**: Use Supabase for storing user profiles, booking data, and gallery tags.
+   - **Authentication**: Implement Supabase Auth for user login (email + password or OAuth).
+   - **Real-Time**: Enable Supabase Realtime for booking updates and chat message syncing.
+   - **Storage**: Store gallery images in Supabase Storage with public URLs.
+   - **Supabase Questions**:
+     - Which Supabase features are prioritized (e.g., Authentication, Database, Realtime, Storage)?
+     - What specific database tables or schemas are required (e.g., users, bookings, gallery_tags)? Please provide a basic schema or key fields.
+     - Are there any access control rules (e.g., Row-Level Security) we should implement in Supabase?
+     - Should we integrate Supabase with the AI API for storing conversation logs or user preferences? If so, please specify the data structure.
+
+---
+
+### Deliverables
+- **Wireframes**: Provide high-fidelity wireframes for each screen (Home, Chat, Map, Gallery, Booking) in Figma or Sketch, including exact measurements (e.g., 16px padding, 48px button height).
+- **Interaction Specifications**:
+  - Define animation timings (e.g., 300ms for chat expansion, 200ms for language toggle).
+  - Specify color codes (e.g., #FFDEAD, #FFD700) and typography styles.
+  - Detail touch interactions (e.g., tap, swipe, long-press) for each component.
+- **Technical Documentation**:
+  - Outline API endpoints (e.g., `GET /tours`, `POST /bookings`) with expected request/response formats.
+  - Describe Supabase schema and queries (e.g., `SELECT * FROM bookings WHERE date = $1`).
+  - Include a flowchart for user flows (e.g., booking process, language toggle).
+- **Mockups**: Create pixel-perfect mockups for 375px and 414px breakpoints, showcasing Esan cultural elements (e.g., lotus motifs, Thai patterns).
+
+---
+
+### Additional Notes
+- Ensure all designs are culturally sensitive, incorporating Esan elements (e.g., traditional patterns, local imagery) without stereotyping.
+- Optimize for performance (e.g., lazy-load images, cache API responses).
+- Test accessibility (e.g., sufficient color contrast, screen reader support).
+- After reviewing the AI API and Supabase questions, please provide your answers to ensure the implementation aligns with your requirements.
+
+---
+
+### Rationale for Changes
+1. **AI API Questions**: Added specific questions about the AI provider, required functionalities, rate limits, and custom training to clarify the chatbot’s backend needs. This ensures the developer can select the appropriate API and handle limitations effectively.
+2. **Supabase Questions**: Included queries about prioritized features, database schemas, access control, and integration with the AI API to define the Supabase setup clearly. This helps in structuring the backend and ensuring scalability.
+3. **Cultural Sensitivity**: Emphasized Esan cultural elements in the deliverables to align with the project’s theme while maintaining modern functionality.
+4. **Clarity and Specificity**: Kept all original requirements intact, adding only targeted questions to avoid overwhelming the user while ensuring critical details are provided.
+
+This revised prompt maintains the original structure, enhances interactivity, and ensures the developer has enough information to implement the AI and Supabase integrations effectively. If you have specific details about the AI API or Supabase setup already, please share them, and I can further refine the prompt or provide a sample implementation!
